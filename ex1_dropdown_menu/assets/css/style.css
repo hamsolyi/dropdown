@@ -1,0 +1,356 @@
+@charset "UTF-8";
+
+html { font-size: 10px; }
+body { font-size: 1.4rem; }
+/*  20에 1.4rem이니까 body의 폰트사이즈는 28pt임,
+10에 1.4rem이면 14pt임*/
+
+/* mobile button area */
+#gnbcheck {
+  display: none;
+}
+
+#mobile-close-btn {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 10px;
+  right: 10px;
+  /* background: red; */
+  z-index: 500;
+  display: none;
+}
+
+/*실습 :
+before, after 사용하여 close 바를 생성하시오.
+높이 2px / 너비 32px / 배경색 #ffffff  */
+/* #mobile-close-btn > span {
+  position: absolute;
+  width: 32px;
+  height: 2px;
+  top: 15px;
+  left: 0;
+  background: #fff;
+}
+#mobile-close-btn > span:nth-child(1) { transform: rotate(45deg); }
+#mobile-close-btn > span:nth-child(2) { transform: rotate(-45deg); } */
+
+#mobile-close-btn:after, #mobile-close-btn:before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 0px;
+  width: 32px;
+  height: 2px;
+  background: #fff;
+}
+/*오류 :
+before, after을 쓸때는 꼭!꼮!! content: '';쓰기!
+가상요소를 여기서 왜쓰는지 이해안감, 공부 부족함 */
+#mobile-close-btn:before {
+  transform: translateY(-50%) rotate(45deg);
+}
+#mobile-close-btn:after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+
+
+
+#gnbbtn {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 10px;
+  right: 10px;
+  z-index: 900;
+  display: none;
+  /* background: red; */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; */
+  /*  부모요소에 position: absolute;는 괜찬은데
+  자식요소에 position: absolute;하면안됨*/
+}
+
+#gnbbtn > span {
+  /* flex할때 position: absolute;하면안됨 안먹힘*/
+  position: absolute;
+  width: 32px;
+  height: 2px;
+  background: #fff;
+  transform: translateY( -50% );
+}
+/* translate에서 했던거마냥 본인의 높이를 생각해서 빼줘야함 */
+#gnbbtn > span:nth-child(1) { top: 8px; }
+#gnbbtn > span:nth-child(2) { top: 16px; }
+#gnbbtn > span:nth-child(3) { top: 24px; }
+
+/*실습:
+위 코드를 참고하여 flex 속성을 사용하여
+햄버거 버튼의 style 구현을 하시오.*/
+
+
+
+/* 전체레이아웃 */
+.wrap {
+  position: relative;
+  width: 100rem; /* width:100%;와 같다*/
+  min-width: 23rem; /*230px;이라는 말임 그런데 width가 유동적으로 바뀌니까 이것도 바뀜*/
+  margin: 0 auto;
+  /* background: red; */
+}
+
+/* 상단영역 */
+.header {
+  position: relative;
+  width: 100rem; /*100%*/
+  height: 10rem;
+  background: skyblue;
+  z-index: 800;
+}
+
+.logo {
+  position: absolute;
+  width: 15rem; /*변화하지않은 초기값은 150px*/
+  height: 10rem;
+  left: 0;
+  top: 0;
+  line-height: 10rem;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  background: #000; /*#000000, black, rgba(0,0,0,1)*/
+}
+
+.logo:hover {
+  color: orange;
+}
+
+/*gnb area*/
+.gnb {
+  position: absolute;
+  right: 1rem;
+  top: 2rem;
+  /* background: yellow; */
+}
+
+.mainmenu {
+  position: relative;
+  width: 80rem;
+  height: 6rem;
+  background: #000;
+  /*부모요소에 높이가 없을때만 overflow:hidden;을 해주는것,
+  지금은 높이가 있으니까 안해도됨*/
+}
+
+.mainmenu > li {
+  position: relative;
+  width: 25%;
+  float: left;
+  /* background: yellow; */
+}
+
+.mainmenu > li > a {
+  position: relative;
+  display: block;
+  line-height: 6rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  color: #fff;
+  transition: background 0.5s;
+  /* background: red; */
+}
+
+.mainmenu > li:hover > a {
+  background: #f00; /* red, f00f00*/
+}
+
+
+/*개별 서브 메뉴 보기*/
+.mainmenu > li:hover > .submenu {
+  display: block;
+}
+/*전체 서브 메뉴 동시에 보기*/
+/* .gnb:hover .mainmenu > li > .submenu  {
+  display: block;
+} */
+/* .mainmenu:hover > li > .submenu  {
+  display: block;
+}*/
+
+
+/* submenu area */
+.mainmenu > li > .submenu {
+  display: none;
+  background: #000;
+}
+/*손가락영역(포인터) 쫍아서 넓게만들어줌,
+li a 를 이렇게 자속요소로 표기하면 공통적용? */
+.mainmenu > li > .submenu li a {
+  display: block;
+  line-height: 4rem;
+  text-align: center;
+  color: #fff;
+  text-transform: capitalize;
+  transition: 0.3s;
+}
+/*.mainmenu > li > .submenu li:hove a {} 라고 해도되지만,
+지금 a가 블럭요소고 li와 크기가 같음*/
+.mainmenu > li > .submenu li a:hover {
+  background: #f00; /*#f00f00*/
+}
+
+/* main area */
+/*실습 :
+.slide 높이: 30rem / 배경색: orange
+.board: 배경색: green
+.notice, .gallery, .banner 높이 20rem / 3분할 배치 / 정렬 float
+.notice : rgba black 색을 배경색으로 하고 투명도 50%
+.graller : rgba black 색을 배경색으로 하고 투명도 10% */
+
+.main > .slide {
+  height: 30rem;
+  background: orange;
+}
+
+.main > .board {
+  background: green;
+  overflow: hidden;
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-between; */
+}
+
+.board > div {
+    float: left;
+    height: 20rem;
+    background: red;
+    width: calc( 100% / 3);
+}
+/* 오류:
+float:left; 후에 배치하는 것이 바로 안나왔음 - width너비를 적당히 주면되는데말이지
+flex로 똑같이 배치해보기 */
+
+.board > div.notice {
+  /* float: left;
+  height: 20rem; */
+  /* width: 33.333%; */
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.board > div.gallery {
+  /* float: left;
+  height: 20rem; */
+  /* width: 33.333%; */
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.board > div.banner {
+  /* float: left;
+  height: 20rem; */
+  /* width: 33.333%; */
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* 하단영역 */
+.footer {
+  overflow: hidden;
+}
+
+.footer > div {
+  float: left;
+  height: 10rem;
+}
+/* 충돌나는부분이없어서? .footer > div.f-left로 표기안해도됨?  */
+.f-left {
+  /* float: left;
+  height: 10rem; */
+  width: 15%;
+  background: #000;
+  color: #fff;
+}
+
+.f-right {
+  /* float: left;
+  height: 10rem; */
+  width: 85%;
+  background: gray;
+}
+
+.f-menu {
+  height: 5rem;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.f-copy {
+  height: 5rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/*
+1200px ( 일반 데스크탑 )
+1024px ( crt 작은 데스크탑 / pc ) 노트북 렙탑과 테블릿의 경계, 요즘 체크 거의 안함
+960px  ( 와이드 테블릿 pc )
+768px  ( ipad )
+0~480px ( phone )
+*/
+
+@media screen and ( max-width: 1200px ) {}
+
+@media screen and ( max-width: 1024px ) {}
+
+@media screen and ( max-width: 960px ) {
+  #gnbbtn {
+    display: block;
+  }
+
+  #mobile-close-btn {
+    display: block;
+  }
+
+    /*실습:
+    햄버거 버튼을 클릭할 경우 gnb박스가
+    toggle 형태로 슬라이드하여 노출 시키시오.*/
+    input[type=checkbox]#gnbcheck:checked ~ .header .gnb {
+      left: 0;
+    }
+    /* 오류 : 공부부족으로 :checked의 구조를 생성하지못함 */
+
+  .gnb {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    bottom: 0;
+    width: 80%;
+    background: rgba(0,0,0,0.9);
+    transition: 0.5s ease-in-out;
+  }
+  .gnb ul.mainmenu {
+    width: 100%;
+    padding-top: 50px;
+  }
+  .gnb ul.mainmenu > li {
+    width: 100%;
+  }
+}
+
+@media screen and ( max-width: 768px ) {}
+
+@media screen and ( max-width: 480px ) {}
+
+@media screen and ( max-width: 340px ) {}
+
+
+
+
+
+
+
+
+
+
+
+
+/**/
